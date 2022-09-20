@@ -17,7 +17,7 @@ let laps = [];
 let isRunning = false;
 let clickCounter = 1;
 
-//Change this logic later using bool
+//Change this logic later using bool hhfhhtrhth
 startStopButton.onclick = function () {
   if (startStopButton.innerText === "Start") {
     intervalId = setInterval(runTimer, 10);

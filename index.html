@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>stopwatch</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="timer-section" id="timer">
+        <span id="minutes">00</span>: <span id="seconds">00</span>.
+        <span id="miliseconds">00</span>
+      </div>
+      <div class="buttons-section">
+        <button class="button lap" id="lap-button">Lap</button>
+        <div class="middle-buttons">
+          <button id="left-center-dot"></button>
+          <button id="right-center-dot"></button>
+        </div>
+
+        <button class="button start" id="start-button">Start</button>
+      </div>
+      <div class="laps-section">
+        <table id="laps"></table>
+      </div>
+    </div>
+    <script type="text/javascript" src="./style.js"></script>
+  </body>
+</html>

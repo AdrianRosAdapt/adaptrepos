@@ -4,17 +4,23 @@
 }
 
 .button {
-  width: 65px;
-  height: 65px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   margin: 0 30px;
+  border-style: none;
 }
+
 .timer-section {
-  padding-top: 180px;
+  padding-top: 120px;
   font-size: 5em;
   color: white;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 200;
+  /* width: max-content; */
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  font-variant-numeric: tabular-nums;
 }
 .container {
   width: 390px;
@@ -24,16 +30,36 @@
 }
 
 .buttons-section {
-  padding-top: 80px;
+  margin-top: 80px;
   display: flex;
   justify-content: space-between;
 }
 
 #start-button {
-  background: #115726;
+  background: rgba(0, 77, 0, 0.5);
   color: #16c94b;
+  border: 1px solid black;
+  box-shadow: 0px 0px 0px 3px rgba(0, 77, 0, 0.5);
 }
-#left-center-dot {
+.lap {
+  background: rgba(99, 99, 99, 0.5);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin: 0 30px;
+  border-style: none;
+  color: rgb(180, 171, 169);
+}
+.active-lap-button {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin: 0 30px;
+  border-style: none;
+  color: white;
+  background: rgba(156, 156, 156, 0.5);
+}
+/* #left-center-dot {
   width: 13px;
   height: 13px;
   border-radius: 100%;
@@ -42,7 +68,7 @@
   width: 13px;
   height: 13px;
   border-radius: 100%;
-}
+} */
 
 h1 {
   margin: 20px;
@@ -54,11 +80,36 @@ h1 {
 .laps-section {
   color: white;
   text-align: center;
-  margin-right: 40px;
+  margin-right: 20px;
+  margin-left: 20px;
+
+  padding-top: 50px;
+  overflow-y: auto;
+
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-#laps {
-  margin-top: 40px;
-  text-align: right;
+.table-of-laps {
+  display: table;
   width: 100%;
-  color: white;
+  flex-direction: column-reverse;
+  font-size: 16px;
+  font-weight: 250;
+}
+
+tr {
+  border-top: 2px solid white;
+  border-bottom: 2px solid white;
+}
+td:nth-child(1) {
+  text-align: left;
+  padding: 8px 0;
+}
+td:nth-child(2) {
+  text-align: right;
+}
+td {
+  font-variant-numeric: tabular-nums;
 }

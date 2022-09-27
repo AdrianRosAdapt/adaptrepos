@@ -7,20 +7,28 @@ const timer = document.getElementById("timer");
 const lapsTable = document.getElementById("laps");
 const lapsSection = document.getElementById("laps-section");
 const resetButton = document.getElementById("reset-button");
+const tableBody = document.getElementById("table-body");
 
 let centisOfEachLap = 0;
 let centis = 0;
 let intervalId;
 let laps = [];
 
+let slowest_lap = 0;
+let fastest_lap = 999999999;
+
 let isRunning = false;
-let clickCounter = 1;
+let numberOfRows = 1;
 let lapsTableRow;
 let lapsTableLapCell;
 let lapsTableTimerCell;
 
 startStopButton.onclick = function () {
   if (!isRunning) {
+    if (numberOfRows === 1) {
+      createRow(centisOfEachLap, numberOfRows);
+      numberOfRows++;
+    }
     intervalId = setInterval(runTimer, 10);
     startStopButton.innerText = "Stop";
     lapButton.innerText = "Lap";
@@ -34,18 +42,42 @@ startStopButton.onclick = function () {
   }
 };
 
+function colorRowsIfLessThanTwo() {}
+
 lapButton.onclick = function () {
+  //To-Do...If time, change the logic here to use booleans instead.
+
   if (lapButton.innerText === "Reset") {
     reset();
   } else if (lapButton.innerText === "Lap") {
     laps.push(centisOfEachLap);
-    replaceRows();
-    //   createRow(centisOfEachLap, clickCounter);
-    //   clickCounter++;
-    //   centisOfEachLap = 0;
-    //   console.log(getFastestLap(laps));
-    //   console.log(getSlowestLap(laps));
-    // }
+    createRow(centisOfEachLap, numberOfRows);
+    numberOfRows++;
+
+    if (laps.length == 2) {
+      lapsTable.lastElementChild.childNodes[
+        2 - getSlowestLap(laps)
+      ].classList.add("red");
+
+      lapsTable.lastElementChild.childNodes[
+        2 - getFastestLap(laps)
+      ].classList.add("green");
+    } else if (laps.length > 2) {
+      if (slowest_lap < centisOfEachLap) {
+        slowest_lap = centisOfEachLap;
+        document.getElementsByClassName("red")[0].classList.remove("red");
+        document
+          .getElementById("laps")
+          .lastElementChild.children[1].classList.add("red");
+      } else if (fastest_lap > centisOfEachLap) {
+        fastest_lap = centisOfEachLap;
+        document.getElementsByClassName("green")[0].classList.remove("green");
+        document
+          .getElementById("laps")
+          .lastElementChild.children[1].classList.add("green");
+      }
+    }
+    centisOfEachLap = 0;
   }
 };
 
@@ -57,12 +89,13 @@ function reset() {
   timer.innerText = resetTime;
   laps = [];
   isRunning = false;
+  numberOfRows = 1;
+  tableBody.innerText = "";
 }
 
 //Takes centi seconds and calculates individual bits of the timer.
 function parseTime(centis) {
   let seconds = Math.floor(centis / 100);
-
   // console.log(seconds);
   let actualSeconds = seconds % 60;
   //console.log(actualSeconds);
@@ -76,25 +109,20 @@ function parseTime(centis) {
 
 //gets the fastest lap in the array
 function getFastestLap(lapsList) {
-  let fastestLap = lapsList.indexOf(Math.min(...lapsList));
+  fastest_lap = Math.min(...lapsList);
+  let fastestLap = lapsList.indexOf(fastest_lap);
   return fastestLap;
+
+  // const fastestRow = document.querySelectorAll();
+  console.log(fastestRow);
 }
+
 function getSlowestLap(lapsList) {
-  let slowestLap = lapsList.indexOf(Math.max(...lapsList));
+  slowest_lap = Math.max(...lapsList);
+  let slowestLap = lapsList.indexOf(slowest_lap);
   return slowestLap;
 }
-// i dont know what I am even doing
-function replaceRows() {
-  let i = 0;
-  const numberOfRows = 6;
-  let individualLap = lapsTable.rows(i);
-  if (numberOfRows >= 0) {
-    individualLap.innerText = "Hello";
-    i++;
-  } else {
-    createRow();
-  }
-}
+
 //Creates lap rows.
 function createRow(number, rowCounter) {
   lapsTableRow = lapsTable.insertRow(0);
@@ -118,17 +146,18 @@ function createRow(number, rowCounter) {
 // }
 
 //Function to pass into the setInterval.
+
 function runTimer() {
   const newTime = parseTime(centis);
-  const parsedSeconds = parseTime(centisOfEachLap);
+  //const parsedSeconds = parseTime(centisOfEachLap);
   timer.innerText = newTime;
   centisOfEachLap++;
   centis++;
-  if (clickCounter === 1) {
-    lapsTableRow = lapsTable.insertRow(0);
-    lapsTableLapCell = lapsTableRow.insertCell(0);
-    lapsTableTimerCell = lapsTableRow.insertCell(1);
-    lapsTableLapCell.innerText = `Lap ${clickCounter++}`;
-  }
+  // if (numberOfRows === 1) {
+  //   lapsTableRow = lapsTable.insertRow(0);
+  //   lapsTableLapCell = lapsTableRow.insertCell(0);
+  //   lapsTableTimerCell = lapsTableRow.insertCell(1);
+  //   lapsTableLapCell.innerText = `Lap ${numberOfRows++}`;
+  // }
   lapsTableTimerCell.innerText = `${parseTime(centisOfEachLap)}`;
 }

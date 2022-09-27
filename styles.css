@@ -2,7 +2,24 @@
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
-
+::-webkit-scrollbar {
+  background: transparent;
+}
+td:nth-child(1) {
+  text-align: left;
+  padding: 8px 0;
+}
+td:nth-child(2) {
+  text-align: right;
+}
+table {
+  border-collapse: collapse;
+}
+table tr {
+  padding: 8px 0px;
+  border-top: 1px solid white;
+  font-variant-numeric: tabular-nums;
+}
 .button {
   width: 70px;
   height: 70px;
@@ -42,13 +59,15 @@
   box-shadow: 0px 0px 0px 3px rgba(0, 77, 0, 0.5);
 }
 .lap {
-  background: rgba(99, 99, 99, 0.5);
+  background: rgba(36, 36, 36, 1);
   width: 70px;
   height: 70px;
   border-radius: 50%;
   margin: 0 30px;
   border-style: none;
   color: rgb(180, 171, 169);
+  border: 1px solid black;
+  box-shadow: 0px 0px 0px 3px rgba(36, 36, 36, 1);
 }
 .active-lap-button {
   width: 70px;
@@ -57,7 +76,9 @@
   margin: 0 30px;
   border-style: none;
   color: white;
+  border: 1px solid black;
   background: rgba(156, 156, 156, 0.5);
+  box-shadow: 0px 0px 0px 3px rgba(156, 156, 156, 0.5);
 }
 /* #left-center-dot {
   width: 13px;
@@ -70,46 +91,30 @@
   border-radius: 100%;
 } */
 
-h1 {
-  margin: 20px;
-  padding: 0px 0;
-  color: #00539f;
-  text-shadow: 3px 3px 1px black;
-  font-family: "Roboto", sans-serif;
-}
 .laps-section {
+  margin-top: 20px;
   color: white;
   text-align: center;
   margin-right: 20px;
   margin-left: 20px;
-
-  padding-top: 50px;
-  overflow-y: auto;
-
-  height: 250px;
-  display: flex;
+  overflow-y: overlay;
+  max-height: 250px;
+  display: block;
   justify-content: center;
   align-items: center;
 }
+
 .table-of-laps {
-  display: table;
   width: 100%;
   flex-direction: column-reverse;
   font-size: 16px;
   font-weight: 250;
 }
 
-tr {
-  border-top: 2px solid white;
-  border-bottom: 2px solid white;
+.green {
+  color: #16c94b;
 }
-td:nth-child(1) {
-  text-align: left;
-  padding: 8px 0;
-}
-td:nth-child(2) {
-  text-align: right;
-}
-td {
-  font-variant-numeric: tabular-nums;
+
+.red {
+  color: red;
 }

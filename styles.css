@@ -5,9 +5,12 @@
 ::-webkit-scrollbar {
   background: transparent;
 }
+/* td {
+  padding: 12px 0px;
+} */
 td:nth-child(1) {
   text-align: left;
-  padding: 8px 0;
+  padding: 10px 0;
 }
 td:nth-child(2) {
   text-align: right;
@@ -16,8 +19,7 @@ table {
   border-collapse: collapse;
 }
 table tr {
-  padding: 8px 0px;
-  border-top: 1px solid white;
+  border-top: 0.5px solid rgb(250, 250, 250, 0.5);
   font-variant-numeric: tabular-nums;
 }
 .button {
@@ -100,13 +102,10 @@ table tr {
   overflow-y: overlay;
   max-height: 250px;
   display: block;
-  justify-content: center;
-  align-items: center;
 }
 
 .table-of-laps {
   width: 100%;
-  flex-direction: column-reverse;
   font-size: 16px;
   font-weight: 250;
 }
@@ -117,4 +116,7 @@ table tr {
 
 .red {
   color: red;
+}
+table .initial-table-data {
+  padding: 20px 0px;
 }

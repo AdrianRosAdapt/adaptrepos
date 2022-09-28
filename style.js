@@ -13,10 +13,8 @@ let centisOfEachLap = 0;
 let centis = 0;
 let intervalId;
 let laps = [];
-
 let slowest_lap = 0;
-let fastest_lap = 999999999;
-
+let fastest_lap = Number.MAX_VALUE;
 let isRunning = false;
 let numberOfRows = 1;
 let lapsTableRow;
@@ -42,8 +40,6 @@ startStopButton.onclick = function () {
   }
 };
 
-function colorRowsIfLessThanTwo() {}
-
 lapButton.onclick = function () {
   //To-Do...If time, change the logic here to use booleans instead.
 
@@ -51,31 +47,12 @@ lapButton.onclick = function () {
     reset();
   } else if (lapButton.innerText === "Lap") {
     laps.push(centisOfEachLap);
-    createRow(centisOfEachLap, numberOfRows);
+    createRow(centisOfEachLap);
     numberOfRows++;
-
     if (laps.length == 2) {
-      lapsTable.lastElementChild.childNodes[
-        2 - getSlowestLap(laps)
-      ].classList.add("red");
-
-      lapsTable.lastElementChild.childNodes[
-        2 - getFastestLap(laps)
-      ].classList.add("green");
+      assessFirstTwoRows();
     } else if (laps.length > 2) {
-      if (slowest_lap < centisOfEachLap) {
-        slowest_lap = centisOfEachLap;
-        document.getElementsByClassName("red")[0].classList.remove("red");
-        document
-          .getElementById("laps")
-          .lastElementChild.children[1].classList.add("red");
-      } else if (fastest_lap > centisOfEachLap) {
-        fastest_lap = centisOfEachLap;
-        document.getElementsByClassName("green")[0].classList.remove("green");
-        document
-          .getElementById("laps")
-          .lastElementChild.children[1].classList.add("green");
-      }
+      assessFastestSlowestLap();
     }
     centisOfEachLap = 0;
   }
@@ -83,6 +60,7 @@ lapButton.onclick = function () {
 
 // Resets timer, stopwatch, and laps table.
 function reset() {
+  lapButton.innerText = "Lap";
   centis = 0;
   centisOfEachLap = 0;
   const resetTime = parseTime(centis);
@@ -91,6 +69,7 @@ function reset() {
   isRunning = false;
   numberOfRows = 1;
   tableBody.innerText = "";
+  createInitialRows();
 }
 
 //Takes centi seconds and calculates individual bits of the timer.
@@ -107,15 +86,15 @@ function parseTime(centis) {
     .padStart(2, "0")}.${milis.toString().padStart(2, "0")} `;
 }
 
-//gets the fastest lap in the array
+// Gets the index of the fastest lap.
+
 function getFastestLap(lapsList) {
   fastest_lap = Math.min(...lapsList);
   let fastestLap = lapsList.indexOf(fastest_lap);
   return fastestLap;
-
-  // const fastestRow = document.querySelectorAll();
-  console.log(fastestRow);
 }
+
+//Gets the index of the slowest lap.
 
 function getSlowestLap(lapsList) {
   slowest_lap = Math.max(...lapsList);
@@ -124,40 +103,54 @@ function getSlowestLap(lapsList) {
 }
 
 //Creates lap rows.
-function createRow(number, rowCounter) {
+
+function createRow(number) {
   lapsTableRow = lapsTable.insertRow(0);
   lapsTableLapCell = lapsTableRow.insertCell(0);
   lapsTableTimerCell = lapsTableRow.insertCell(1);
-  lapsTableLapCell.innerText = `Lap ${rowCounter}`;
+  lapsTableLapCell.innerText = `Lap ${numberOfRows}`;
   lapsTableTimerCell.innerText = `${parseTime(number)}`;
 }
-//Creates a lap and formats it.
-// function createLap(laps) {
-//   let i = 0;
-//   const tableBody = document.getElementById("laps-data");
-//   let individualLaps = "";
-//   for (let lap of laps) {
-//     let formatted = parseTime(laps[i]);
-//     individualLaps = `${formatted}`;
-//     //individualLaps += `<tr><td>Lap${i + 1}</td><td> ${formatted}</td></tr>`;
-//     i++;
-//   }
-//   return individualLaps;
-// }
 
 //Function to pass into the setInterval.
 
 function runTimer() {
   const newTime = parseTime(centis);
-  //const parsedSeconds = parseTime(centisOfEachLap);
   timer.innerText = newTime;
   centisOfEachLap++;
   centis++;
-  // if (numberOfRows === 1) {
-  //   lapsTableRow = lapsTable.insertRow(0);
-  //   lapsTableLapCell = lapsTableRow.insertCell(0);
-  //   lapsTableTimerCell = lapsTableRow.insertCell(1);
-  //   lapsTableLapCell.innerText = `Lap ${numberOfRows++}`;
-  // }
   lapsTableTimerCell.innerText = `${parseTime(centisOfEachLap)}`;
+}
+
+function assessFirstTwoRows() {
+  tableBody.children[2 - getSlowestLap(laps)].classList.add("red");
+
+  tableBody.children[2 - getFastestLap(laps)].classList.add("green");
+}
+
+//Keeps track of the fastest / slowest laps. And based on the current lap time, assignes / removes a class. Or does nothing if neither condition is met.
+
+function assessFastestSlowestLap() {
+  if (slowest_lap < centisOfEachLap) {
+    slowest_lap = centisOfEachLap;
+    document.getElementsByClassName("red")[0].classList.remove("red");
+    tableBody.children[1].classList.add("red");
+  } else if (fastest_lap > centisOfEachLap) {
+    fastest_lap = centisOfEachLap;
+    document.getElementsByClassName("green")[0].classList.remove("green");
+    tableBody.children[1].classList.add("green");
+  }
+}
+
+function replaceROw() {
+  tableBody.lastElementChild.remove();
+}
+
+function createInitialRows() {
+  for (let number = 1; number < 7; number++) {
+    lapsTableRow = lapsTable.insertRow(0);
+    lapsTableLapCell = lapsTableRow.insertCell(0);
+    lapsTableTimerCell = lapsTableRow.insertCell(1);
+    lapsTableLapCell.classList.add("initial-table-data");
+  }
 }

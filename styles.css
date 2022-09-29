@@ -1,13 +1,12 @@
 * {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-weight: 200;
 }
 ::-webkit-scrollbar {
   background: transparent;
 }
-/* td {
-  padding: 12px 0px;
-} */
+
 td:nth-child(1) {
   text-align: left;
   padding: 10px 0;
@@ -34,11 +33,10 @@ table tr {
   padding-top: 120px;
   font-size: 5em;
   color: white;
-  font-weight: 200;
-  /* width: max-content; */
   display: flex;
-  text-align: center;
+  /* text-align: center; */
   justify-content: center;
+  align-items: center;
   font-variant-numeric: tabular-nums;
 }
 .container {
@@ -82,16 +80,21 @@ table tr {
   background: rgba(156, 156, 156, 0.5);
   box-shadow: 0px 0px 0px 3px rgba(156, 156, 156, 0.5);
 }
-/* #left-center-dot {
-  width: 13px;
-  height: 13px;
-  border-radius: 100%;
+#left-center-dot {
+  margin-right: 2px;
 }
 #right-center-dot {
-  width: 13px;
-  height: 13px;
-  border-radius: 100%;
-} */
+  margin-left: 2px;
+  background-color: rgb(250, 250, 250, 0.5);
+}
+.middle-buttons > button {
+  margin-top: 30px;
+  border: none;
+  border-radius: 50%;
+  width: 4px;
+  height: 4px;
+  padding: 4px;
+}
 
 .laps-section {
   margin-top: 20px;
@@ -107,14 +110,13 @@ table tr {
 .table-of-laps {
   width: 100%;
   font-size: 16px;
-  font-weight: 250;
 }
 
-.green {
+.fastest-lap {
   color: #16c94b;
 }
 
-.red {
+.slowest-lap {
   color: red;
 }
 table .initial-table-data {

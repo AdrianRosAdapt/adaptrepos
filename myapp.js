@@ -8,11 +8,11 @@ const lapsTable = document.getElementById("laps");
 const lapsSection = document.getElementById("laps-section");
 const resetButton = document.getElementById("reset-button");
 const tableBody = document.getElementById("table-body");
+let laps = [];
 
 let centisOfEachLap = 0;
 let centis = 0;
 let intervalId;
-let laps = [];
 let slowest_lap = 0;
 let fastest_lap = Number.MAX_VALUE;
 let isRunning = false;
@@ -46,7 +46,9 @@ lapButton.onclick = function () {
   if (lapButton.innerText === "Reset") {
     reset();
   } else if (lapButton.innerText === "Lap") {
-    laps.push(centisOfEachLap);
+    laps = [...laps, centisOfEachLap];
+    //laps.push(centisOfEachLap);
+    replaceROw();
     createRow(centisOfEachLap);
     numberOfRows++;
     if (laps.length == 2) {
@@ -90,7 +92,7 @@ function parseTime(centis) {
 
 function getFastestLap(lapsList) {
   fastest_lap = Math.min(...lapsList);
-  let fastestLap = lapsList.indexOf(fastest_lap);
+  const fastestLap = lapsList.indexOf(fastest_lap);
   return fastestLap;
 }
 
@@ -98,7 +100,7 @@ function getFastestLap(lapsList) {
 
 function getSlowestLap(lapsList) {
   slowest_lap = Math.max(...lapsList);
-  let slowestLap = lapsList.indexOf(slowest_lap);
+  const slowestLap = lapsList.indexOf(slowest_lap);
   return slowestLap;
 }
 
@@ -123,9 +125,9 @@ function runTimer() {
 }
 
 function assessFirstTwoRows() {
-  tableBody.children[2 - getSlowestLap(laps)].classList.add("red");
+  tableBody.children[2 - getSlowestLap(laps)].classList.add("slowest-lap");
 
-  tableBody.children[2 - getFastestLap(laps)].classList.add("green");
+  tableBody.children[2 - getFastestLap(laps)].classList.add("fastest-lap");
 }
 
 //Keeps track of the fastest / slowest laps. And based on the current lap time, assignes / removes a class. Or does nothing if neither condition is met.
@@ -133,17 +135,23 @@ function assessFirstTwoRows() {
 function assessFastestSlowestLap() {
   if (slowest_lap < centisOfEachLap) {
     slowest_lap = centisOfEachLap;
-    document.getElementsByClassName("red")[0].classList.remove("red");
-    tableBody.children[1].classList.add("red");
+    document
+      .getElementsByClassName("slowest-lap")[0]
+      .classList.remove("slowest-lap");
+    tableBody.children[1].classList.add("slowest-lap");
   } else if (fastest_lap > centisOfEachLap) {
     fastest_lap = centisOfEachLap;
-    document.getElementsByClassName("green")[0].classList.remove("green");
-    tableBody.children[1].classList.add("green");
+    document
+      .getElementsByClassName("fastest-lap")[0]
+      .classList.remove("fastest-lap");
+    tableBody.children[1].classList.add("fastest-lap");
   }
 }
 
 function replaceROw() {
-  tableBody.lastElementChild.remove();
+  if (numberOfRows < 8) {
+    tableBody.lastElementChild.remove();
+  }
 }
 
 function createInitialRows() {
